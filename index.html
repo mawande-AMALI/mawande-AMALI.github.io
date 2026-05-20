@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mawande Ngidi — Urban Governance & Data Systems</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #1C1F1A;
+  --ink-mid: #3A3D37;
+  --ink-muted: #6B6E66;
+  --green: #1E4D3B;
+  --green-light: #2D6B52;
+  --green-pale: #EBF2EE;
+  --gold: #B8924A;
+  --gold-pale: #F5EDD8;
+  --cream: #F7F4EE;
+  --white: #FFFFFF;
+  --border: rgba(30,77,59,0.12);
+  --charcoal: #252722;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.1rem 5rem;
+  background: rgba(247,244,238,0.93);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-weight: 600; letter-spacing: 0.04em;
+  color: var(--green); text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-muted); text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--green); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; padding-top: 80px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: var(--charcoal);
+}
+.hero-left {
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 5rem 5rem 5rem;
+  position: relative; overflow: hidden;
+}
+.hero-bg-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22rem; font-weight: 600; line-height: 0.85;
+  color: rgba(255,255,255,0.03);
+  position: absolute; top: 0; left: -1rem;
+  pointer-events: none; user-select: none;
+}
+.hero-tag {
+  display: inline-block; font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gold); border: 1px solid var(--gold);
+  padding: 0.3rem 0.9rem; border-radius: 2rem;
+  margin-bottom: 2rem; width: fit-content;
+}
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 5.5vw, 5rem); font-weight: 600;
+  color: var(--white); line-height: 1.05; margin-bottom: 1.5rem;
+}
+.hero-headline {
+  font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.6);
+  max-width: 420px; line-height: 1.85; margin-bottom: 0.85rem;
+}
+.hero-headline strong {
+  color: rgba(255,255,255,0.9); font-weight: 400;
+}
+.hero-position {
+  font-size: 0.85rem; color: var(--gold); margin-bottom: 2.5rem;
+  font-weight: 400;
+}
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: var(--green); color: var(--white); text-decoration: none;
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 0.9rem 2rem;
+  border-radius: 2rem; transition: background 0.2s, transform 0.2s; width: fit-content;
+}
+.hero-cta:hover { background: var(--green-light); transform: translateY(-2px); }
+
+.hero-right {
+  background: var(--green);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 5rem 4rem; gap: 3.5rem;
+}
+.hero-stat { border-left: 2px solid var(--gold); padding-left: 1.5rem; }
+.hero-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem; font-weight: 600; color: var(--white); line-height: 1;
+}
+.hero-stat-label { font-size: 0.85rem; font-weight: 300; color: rgba(255,255,255,0.6); margin-top: 0.3rem; }
+
+.hero-positioning {
+  margin-top: auto;
+  padding: 1.75rem;
+  background: rgba(255,255,255,0.06);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.hero-positioning p {
+  font-size: 0.9rem; font-weight: 300; color: rgba(255,255,255,0.7);
+  line-height: 1.9; font-style: italic;
+}
+
+/* ── SHARED SECTION STYLES ── */
+section { padding: 6rem 5rem; }
+
+.label {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--green); margin-bottom: 1rem;
+}
+.label::before { content: ''; display: block; width: 2rem; height: 2px; background: var(--green); }
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 600; line-height: 1.15;
+  color: var(--ink); margin-bottom: 1.5rem; max-width: 700px;
+}
+.section-title.light { color: var(--white); }
+
+/* ── ABOUT ── */
+.about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 6rem; align-items: start; }
+.about-pull {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 400;
+  font-style: italic; color: var(--green); line-height: 1.7; margin-bottom: 2rem;
+}
+.about-body p { font-size: 0.975rem; font-weight: 300; color: var(--ink-mid); line-height: 1.95; margin-bottom: 1.25rem; }
+.about-edu {
+  margin-top: 2rem; background: var(--charcoal); border-radius: 0.75rem;
+  padding: 1.5rem 1.75rem; display: flex; gap: 1.25rem; align-items: flex-start;
+}
+.edu-dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; margin-top: 0.5rem; flex-shrink: 0; }
+.edu-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.35rem; }
+.edu-degree { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 0.2rem; }
+.edu-uni { font-size: 0.82rem; color: rgba(255,255,255,0.45); }
+
+/* ── WHAT I DO ── */
+.wid-section { background: var(--green-pale); }
+.wid-intro { font-size: 1rem; font-weight: 300; color: var(--ink-mid); max-width: 620px; line-height: 1.9; margin-bottom: 3rem; }
+.wid-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 0.75rem; overflow: hidden; }
+.wid-item { background: var(--white); padding: 1.75rem; }
+.wid-item-num { font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 600; color: var(--green); opacity: 0.35; margin-bottom: 0.5rem; }
+.wid-item p { font-size: 0.875rem; font-weight: 300; color: var(--ink-mid); line-height: 1.8; }
+
+/* ── EXPERTISE ── */
+.expertise-section { background: var(--charcoal); }
+.expertise-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+.expertise-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 0.875rem; padding: 2rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+.expertise-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(184,146,74,0.3); }
+.ec-num { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold); margin-bottom: 1rem; }
+.ec-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; color: var(--white); margin-bottom: 0.75rem; }
+.ec-body { font-size: 0.875rem; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.85; }
+
+/* ── APPROACH ── */
+.approach-section { background: var(--cream); }
+.approach-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 6rem; align-items: start; margin-top: 3rem; }
+.approach-steps { display: flex; flex-direction: column; gap: 0; }
+.approach-step { display: flex; gap: 1.75rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
+.approach-step:first-child { padding-top: 0; }
+.approach-step:last-child { border-bottom: none; }
+.as-num {
+  font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 600;
+  color: var(--green); opacity: 0.2; line-height: 1; flex-shrink: 0; width: 2.5rem;
+}
+.as-title { font-size: 0.9rem; font-weight: 500; color: var(--green); margin-bottom: 0.4rem; letter-spacing: 0.02em; }
+.as-body { font-size: 0.875rem; font-weight: 300; color: var(--ink-muted); line-height: 1.85; }
+.approach-statement {
+  background: var(--green); border-radius: 1rem; padding: 2.5rem;
+  position: sticky; top: 6rem;
+}
+.approach-statement blockquote {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-style: italic;
+  font-weight: 400; color: var(--white); line-height: 1.6; margin-bottom: 2rem;
+}
+.approach-statement p { font-size: 0.875rem; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.85; margin-bottom: 1rem; }
+.approach-statement p:last-child { margin-bottom: 0; }
+
+/* ── EXPERIENCE ── */
+.experience-section { background: var(--white); }
+.exp-current {
+  background: var(--green-pale); border-radius: 1rem; padding: 2.5rem;
+  border-left: 4px solid var(--green); margin-bottom: 3rem;
+}
+.exp-current-tag {
+  display: inline-block; font-size: 0.72rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--green); font-weight: 500;
+  background: var(--white); padding: 0.25rem 0.75rem; border-radius: 2rem;
+  margin-bottom: 1rem;
+}
+.exp-current-role {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600;
+  color: var(--ink); margin-bottom: 0.25rem;
+}
+.exp-current-org { font-size: 0.9rem; color: var(--green); margin-bottom: 1.5rem; font-weight: 400; }
+.exp-current-body { font-size: 0.925rem; font-weight: 300; color: var(--ink-mid); line-height: 1.9; margin-bottom: 1.5rem; }
+.exp-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.exp-tag {
+  font-size: 0.75rem; color: var(--green); background: var(--white);
+  border: 1px solid var(--border); padding: 0.25rem 0.75rem; border-radius: 2rem;
+}
+
+.exp-timeline { margin-top: 2rem; }
+.exp-item { display: grid; grid-template-columns: 200px 1fr; gap: 2.5rem; padding: 2rem 0; border-bottom: 1px solid var(--border); position: relative; }
+.exp-item::before { content: ''; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: absolute; left: -1.5rem; top: 2.4rem; }
+.exp-meta-org { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 0.3rem; }
+.exp-meta-period { font-size: 0.78rem; color: var(--ink-muted); }
+.exp-role { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.6rem; }
+.exp-desc { font-size: 0.875rem; font-weight: 300; color: var(--ink-muted); line-height: 1.9; }
+
+/* ── CASE STUDIES ── */
+.cases-section { background: var(--charcoal); }
+.cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+.case-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 0.875rem; padding: 1.75rem;
+  transition: background 0.2s;
+}
+.case-card:hover { background: rgba(255,255,255,0.07); }
+.case-city { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; font-weight: 500; }
+.case-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--white); margin-bottom: 0.75rem; line-height: 1.3; }
+.case-body { font-size: 0.85rem; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.85; }
+.case-tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.25rem; }
+.case-tag { font-size: 0.72rem; color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.06); border-radius: 2rem; padding: 0.2rem 0.65rem; }
+
+/* ── IMPACT ── */
+.impact-section { background: var(--green-pale); }
+.impact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+.impact-card { background: var(--white); border-radius: 0.875rem; padding: 2rem; border: 1px solid var(--border); }
+.impact-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+.impact-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--ink); margin-bottom: 0.65rem; }
+.impact-body { font-size: 0.875rem; font-weight: 300; color: var(--ink-muted); line-height: 1.85; }
+
+/* ── CONTACT ── */
+.contact-section {
+  background: var(--green); text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 6rem 5rem;
+}
+.contact-section .label { color: rgba(255,255,255,0.6); justify-content: center; }
+.contact-section .label::before { background: rgba(255,255,255,0.4); }
+.contact-section .section-title { max-width: 560px; margin: 0 auto 1rem; color: var(--white); }
+.contact-sub { font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.65); max-width: 500px; line-height: 1.9; margin-bottom: 2.5rem; }
+.contact-email {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--white);
+  text-decoration: none; border-bottom: 2px solid rgba(255,255,255,0.4);
+  padding-bottom: 0.25rem; transition: border-color 0.2s;
+}
+.contact-email:hover { border-color: var(--white); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--charcoal); padding: 2rem 5rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer p { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(255,255,255,0.4); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 5rem 1.75rem 3rem; }
+  .hero-right { padding: 3rem 1.75rem; }
+  section { padding: 4rem 1.75rem; }
+  .about-grid, .approach-grid, .exp-item { grid-template-columns: 1fr; gap: 2rem; }
+  .exp-item::before { display: none; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Mawande Ngidi</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#work">Selected work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-bg-text">MN</div>
+    <span class="hero-tag">Urban Governance · Data Systems · Public-Sector Delivery</span>
+    <h1 class="hero-name">Mawande<br>Ngidi</h1>
+    <p class="hero-headline"><strong>Helping African cities turn data into delivery.</strong></p>
+    <p class="hero-position">AMALI Data Programme Lead · African Centre for Cities, UCT</p>
+    <a href="#about" class="hero-cta">Learn more →</a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat">
+      <div class="hero-stat-num">15+</div>
+      <div class="hero-stat-label">Years supporting African public institutions</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">Pan-African</div>
+      <div class="hero-stat-label">Southern, East, West &amp; Central Africa</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">Cities</div>
+      <div class="hero-stat-label">Multiple cohorts of African city governments supported</div>
+    </div>
+    <div class="hero-positioning">
+      <p>Mawande Ngidi works with African city leaders and technical teams to strengthen urban data systems, embed performance management routines, and translate mayoral priorities into measurable delivery.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="label">About</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="section-title">Building the data and delivery systems African cities need to govern better</h2>
+      <p class="about-pull">At the intersection of urban governance, data systems, and public-sector delivery.</p>
+    </div>
+    <div class="about-body">
+      <p>Mawande Ngidi is a public-sector delivery, urban governance, and data systems specialist working to strengthen how African cities make decisions, manage performance, and deliver on public priorities.</p>
+      <p>He currently leads the <strong>AMALI Data Programme</strong> at the African Centre for Cities, University of Cape Town — a multi-city technical assistance programme, in partnership with Bloomberg Philanthropies and Big Win Philanthropy, that supports African mayors, governors, and their teams to use data more effectively in delivering their legacy goals.</p>
+      <p>His work is deeply practical. Mawande supports cities not only to think about data, but to organise it, govern it, visualise it, and use it in real decision-making spaces. This means helping city teams move from paper-based records, fragmented spreadsheets, and siloed departmental data toward structured, reliable, decision-ready systems.</p>
+      <p>His approach is grounded in the belief that data is not an end in itself. Data becomes powerful when it is connected to leadership, routines, institutional accountability, and the everyday work of government. His work focuses on the full chain between information and action: clarifying goals, identifying the right indicators, understanding available datasets, strengthening data quality, building reporting tools, and creating regular performance conversations led by city leadership.</p>
+      <p>Mawande's professional focus is increasingly centred on the future of African urban data systems — including how cities can build the foundations needed for responsible use of AI, predictive analytics, remote sensing, and other emerging tools. His view is that AI strengthens, rather than replaces, the case for strong foundational urban data systems.</p>
+      <div class="about-edu">
+        <div class="edu-dot"></div>
+        <div>
+          <div class="edu-label">Education</div>
+          <div class="edu-degree">Master of Philosophy — Urban and Regional Science</div>
+          <div class="edu-uni">Stellenbosch University</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT I DO -->
+<section class="wid-section">
+  <div class="label">What I do</div>
+  <h2 class="section-title">Practical support for cities navigating complex urban challenges</h2>
+  <p class="wid-intro">African cities are growing quickly, but the systems needed to understand, manage, and deliver on that growth are often under strain. Many city leaders are making critical decisions with fragmented data, limited reporting systems, and weak feedback loops between strategy and implementation. I help cities close that gap.</p>
+  <div class="wid-list">
+    <div class="wid-item">
+      <div class="wid-item-num">01</div>
+      <p>Clarify priority goals and translate them into measurable delivery outcomes</p>
+    </div>
+    <div class="wid-item">
+      <div class="wid-item-num">02</div>
+      <p>Identify, organise, and assess existing datasets across city departments</p>
+    </div>
+    <div class="wid-item">
+      <div class="wid-item-num">03</div>
+      <p>Evaluate data quality, gaps, ownership, governance, and custodianship</p>
+    </div>
+    <div class="wid-item">
+      <div class="wid-item-num">04</div>
+      <p>Develop indicators, reporting frameworks, and data inventories linked to city goals</p>
+    </div>
+    <div class="wid-item">
+      <div class="wid-item-num">05</div>
+      <p>Build dashboards, trackers, and reporting tools that city teams can actually use and maintain</p>
+    </div>
+    <div class="wid-item">
+      <div class="wid-item-num">06</div>
+      <p>Launch and embed leadership-led performance management meetings and routines</p>
+    </div>
+    <div class="wid-item">
+      <div class="wid-item-num">07</div>
+      <p>Strengthen internal capacity to use data for decision-making, not just reporting</p>
+    </div>
+    <div class="wid-item">
+      <div class="wid-item-num">08</div>
+      <p>Build capability inside city halls — not dependency on external consultants</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section class="expertise-section" id="expertise">
+  <div class="label" style="color: rgba(255,255,255,0.5);">Areas of expertise</div>
+  <h2 class="section-title light">Six core capabilities at the heart of the work</h2>
+  <div class="expertise-grid">
+    <div class="expertise-card">
+      <div class="ec-num">01</div>
+      <div class="ec-title">Urban Data Systems</div>
+      <p class="ec-body">Helping cities understand what data they have, where it sits, who owns it, how reliable it is, and how it can be used to support delivery. This includes data inventories, quality checks, data governance, data-sharing protocols, and reporting systems.</p>
+    </div>
+    <div class="expertise-card">
+      <div class="ec-num">02</div>
+      <div class="ec-title">Performance Management</div>
+      <p class="ec-body">Supporting cities to create leadership-led routines where data is used to review progress, identify delivery challenges, assign actions, and follow up. The focus is not just on dashboards — but on the institutional routines that make dashboards useful.</p>
+    </div>
+    <div class="expertise-card">
+      <div class="ec-num">03</div>
+      <div class="ec-title">Public-Sector Delivery</div>
+      <p class="ec-body">Translating government priorities into implementation plans, indicators, delivery routines, and accountability mechanisms. Deep experience of the complexity of working inside public institutions across multiple African contexts.</p>
+    </div>
+    <div class="expertise-card">
+      <div class="ec-num">04</div>
+      <div class="ec-title">City Leadership &amp; Capacity Building</div>
+      <p class="ec-body">Working directly with mayors, governors, senior officials, and technical teams to build confidence and capability around data use, decision-making, and performance tracking. Coaching individuals and teams through sustained engagement.</p>
+    </div>
+    <div class="expertise-card">
+      <div class="ec-num">05</div>
+      <div class="ec-title">Applied Urban Research</div>
+      <p class="ec-body">Work grounded in African urban realities — fragmented data systems, capacity constraints, service delivery pressures, informality, infrastructure backlogs, and the need for city-level evidence to inform planning and investment.</p>
+    </div>
+    <div class="expertise-card">
+      <div class="ec-num">06</div>
+      <div class="ec-title">Data, AI &amp; Responsible Innovation</div>
+      <p class="ec-body">Exploring how African cities can prepare for responsible use of AI, predictive analytics, and remote sensing by first strengthening the underlying data, governance workflows, and institutional practices these tools depend on.</p>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="approach-section" id="approach">
+  <div class="label">How I work</div>
+  <h2 class="section-title">A practical, collaborative, implementation-focused approach</h2>
+  <div class="approach-grid">
+    <div class="approach-statement">
+      <blockquote>"In fast-growing African cities, better decisions depend on more than data. They depend on systems, routines, leadership, and the ability to turn evidence into action."</blockquote>
+      <p>My work is practical, collaborative, and implementation-focused. I work with the systems cities already have, while helping them build toward stronger, more reliable, and more sustainable data practices.</p>
+      <p>The aim is not to create dependency on external experts. The aim is to build capability inside city halls — and to leave teams with routines, tools, and confidence that outlast any programme.</p>
+      <p>I work closely with mayors, governors, senior officials, technical departments, City Data Advisors, development partners, and academic institutions. The work spans site visits, workshops, peer learning, coaching, and technical assistance.</p>
+    </div>
+    <div class="approach-steps">
+      <div class="approach-step">
+        <div class="as-num">1</div>
+        <div>
+          <div class="as-title">Start with the city's real priority</div>
+          <p class="as-body">The work begins with the mayoral or city leadership priority — not a tool. The first step is understanding what the city is trying to achieve, why it matters, and what decisions leaders need to make.</p>
+        </div>
+      </div>
+      <div class="approach-step">
+        <div class="as-num">2</div>
+        <div>
+          <div class="as-title">Translate priorities into measurable goals</div>
+          <p class="as-body">Broad ambitions are turned into clearer objectives, indicators, milestones, and delivery questions. This makes progress easier to track and easier to manage.</p>
+        </div>
+      </div>
+      <div class="approach-step">
+        <div class="as-num">3</div>
+        <div>
+          <div class="as-title">Understand the data landscape</div>
+          <p class="as-body">Identifying what data exists, where it sits, who owns it, how it is collected, and whether it is reliable enough for decision-making. Building the inventory before building the dashboard.</p>
+        </div>
+      </div>
+      <div class="approach-step">
+        <div class="as-num">4</div>
+        <div>
+          <div class="as-title">Build practical reporting tools</div>
+          <p class="as-body">The focus is on tools that city teams can actually use and maintain — dashboards, trackers, spreadsheets, templates, reporting forms, or lightweight data systems appropriate to the context.</p>
+        </div>
+      </div>
+      <div class="approach-step">
+        <div class="as-num">5</div>
+        <div>
+          <div class="as-title">Embed performance routines</div>
+          <p class="as-body">Data only matters when it enters decision-making. Creating regular performance meetings where leaders use evidence to review progress, solve problems, and follow up.</p>
+        </div>
+      </div>
+      <div class="approach-step">
+        <div class="as-num">6</div>
+        <div>
+          <div class="as-title">Build capability, not dependency</div>
+          <p class="as-body">The goal is to leave city teams stronger. Support is designed to build confidence, ownership, and internal routines that can continue beyond the programme.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience-section" id="experience">
+  <div class="label">Experience</div>
+  <h2 class="section-title">A coherent journey from delivery to data to governance</h2>
+
+  <div class="exp-current">
+    <span class="exp-current-tag">Current Role</span>
+    <div class="exp-current-role">AMALI Data Programme Lead</div>
+    <div class="exp-current-org">African Centre for Cities, University of Cape Town · In partnership with Bloomberg Philanthropies &amp; Big Win Philanthropy</div>
+    <p class="exp-current-body">Leading the design and delivery of the AMALI Data Programme — a multi-city technical assistance and capacity-building programme supporting African cities to use data for mayoral legacy goals, performance management, and evidence-based decision-making. Working directly with mayors, governors, senior city officials, and technical teams across Southern, East, West, and Central Africa.</p>
+    <p class="exp-current-body">Core work includes supporting cities to clarify priority goals and translate them into measurable indicators; designing and guiding data inventories linked to city legacy goals; helping cities assess existing datasets, data gaps, data quality, ownership, and custodianship; supporting the development of reporting tools, dashboards, and monitoring systems; and embedding leadership-led performance management meetings and routines.</p>
+    <p class="exp-current-body">City-level support has covered areas including inner-city regeneration, job creation, waste management, revenue enhancement, water services, climate resilience, housing, informal settlements, and local economic development.</p>
+    <div class="exp-tags">
+      <span class="exp-tag">Data inventories</span>
+      <span class="exp-tag">KPI development</span>
+      <span class="exp-tag">Dashboards</span>
+      <span class="exp-tag">Performance management</span>
+      <span class="exp-tag">City coaching</span>
+      <span class="exp-tag">Programme strategy</span>
+      <span class="exp-tag">Applied research</span>
+      <span class="exp-tag">Stakeholder engagement</span>
+    </div>
+  </div>
+
+  <div class="exp-timeline" style="padding-left: 1.5rem; border-left: 1px solid var(--border);">
+    <div class="exp-item">
+      <div>
+        <div class="exp-meta-org">Delivery Associates</div>
+        <div class="exp-meta-period">Senior advisory role</div>
+      </div>
+      <div>
+        <div class="exp-role">Senior Consultant</div>
+        <p class="exp-desc">Advised senior government leaders across Africa on strategic priority setting, delivery unit design, and embedding data use in government systems. Supported Rwanda's Second National Strategy for Transformation (NST2). Contributed to establishing a central Delivery Unit in the Prime Minister's Office. Led development of health information systems digitisation policy with the Ministry of Health in Lesotho and Gavi. Supported African city leadership and capacity-building programmes.</p>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div>
+        <div class="exp-meta-org">Gauteng Premier's Delivery Unit</div>
+        <div class="exp-meta-period">Provincial government</div>
+      </div>
+      <div>
+        <div class="exp-role">Director of Research and Data Analysis</div>
+        <p class="exp-desc">Led evidence-based planning and performance management work across infrastructure, health, and economic development sectors. Contributed to war-room style coordination to fast-track priority infrastructure projects. Supported delivery systems, spatial planning, social facility provision, and environmental approval process improvements. Contributed to health infrastructure delivery including work linked to hospital bed delivery and infrastructure coordination.</p>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div>
+        <div class="exp-meta-org">CSIR</div>
+        <div class="exp-meta-period">Career foundation</div>
+      </div>
+      <div>
+        <div class="exp-role">Researcher — Geospatial Analytics</div>
+        <p class="exp-desc">Focused on geospatial analytics at the Council for Scientific and Industrial Research, supporting local, provincial, and national government with spatial, demographic, and urban data analysis to inform planning and service delivery.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="cases-section" id="work">
+  <div class="label" style="color: rgba(255,255,255,0.5);">Selected work</div>
+  <h2 class="section-title light">Cities, priorities, and practical support</h2>
+  <div class="cases-grid">
+    <div class="case-card">
+      <div class="case-city">Johannesburg · South Africa</div>
+      <div class="case-title">Inner-City Regeneration &amp; Bad Buildings</div>
+      <p class="case-body">Supported work linked to the City of Johannesburg's mayoral legacy goal of reclaiming, restoring, and rebuilding the inner city. Work included helping frame indicators, data needs, and reporting approaches around priority bad buildings, service delivery issues, redevelopment, occupancy, legal status, and implementation tracking.</p>
+      <div class="case-tag-row">
+        <span class="case-tag">Urban regeneration</span>
+        <span class="case-tag">Data framing</span>
+        <span class="case-tag">Indicators</span>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-city">Lilongwe · Malawi</div>
+      <div class="case-title">Revenue Enhancement &amp; City-Owned Assets</div>
+      <p class="case-body">Supported work linked to improving management of city-owned immovable assets and strengthening locally generated revenue. Helped clarify the goal, understand available data, and structure data around asset management and revenue tracking.</p>
+      <div class="case-tag-row">
+        <span class="case-tag">Revenue systems</span>
+        <span class="case-tag">Asset data</span>
+        <span class="case-tag">Data inventory</span>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-city">Pointe-Noire · Congo</div>
+      <div class="case-title">Waste Management &amp; Circular Economy</div>
+      <p class="case-body">Supported work on solid waste management, neighbourhood-level pre-collection, transfer points, infrastructure modernisation, and the city's circular economy ambitions. Helped structure delivery priorities and the data needed to track progress.</p>
+      <div class="case-tag-row">
+        <span class="case-tag">Waste systems</span>
+        <span class="case-tag">Delivery tracking</span>
+        <span class="case-tag">Infrastructure</span>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-city">Tamale · Ghana</div>
+      <div class="case-title">Job Creation Tracking</div>
+      <p class="case-body">Supported the city's ambition around job creation, including developing a practical jobs tracker, establishing baseline data, and creating clearer systems for tracking jobs linked to city projects, investments, and local economic activity.</p>
+      <div class="case-tag-row">
+        <span class="case-tag">Local economic development</span>
+        <span class="case-tag">Jobs tracker</span>
+        <span class="case-tag">Baseline data</span>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-city">Bishoftu · Ethiopia</div>
+      <div class="case-title">Tourism-Led Growth &amp; Data Systems</div>
+      <p class="case-body">Supported tourism-led growth, infrastructure development, and the need for stronger data systems to track delivery. A high-potential case for building a dashboard and performance management routine around a strategic growth agenda.</p>
+      <div class="case-tag-row">
+        <span class="case-tag">Tourism data</span>
+        <span class="case-tag">Dashboard design</span>
+        <span class="case-tag">Performance routines</span>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-city">Multiple Cities · Africa</div>
+      <div class="case-title">Data for Complex Urban Problems</div>
+      <p class="case-body">Broader work showing how urban data can support difficult city challenges involving buildings, infrastructure, informality, service delivery, legal complexity, and public safety — across multiple African city contexts.</p>
+      <div class="case-tag-row">
+        <span class="case-tag">Urban complexity</span>
+        <span class="case-tag">Multi-city learning</span>
+        <span class="case-tag">Service delivery</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="impact-section">
+  <div class="label">Impact areas</div>
+  <h2 class="section-title">From fragmented information to decision-ready data</h2>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="impact-icon">◈</div>
+      <div class="impact-title">From fragmented data to decision-ready systems</div>
+      <p class="impact-body">Many African cities hold important information across departments, spreadsheets, paper records, and informal systems. This work helps cities structure that information so it can support leadership decisions.</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-icon">◈</div>
+      <div class="impact-title">Turning mayoral priorities into measurable delivery</div>
+      <p class="impact-body">City leaders often have ambitious priorities but limited systems for tracking progress. Translating these into indicators, reporting tools, and performance routines makes delivery visible and manageable.</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-icon">◈</div>
+      <div class="impact-title">Building practical capacity inside city halls</div>
+      <p class="impact-body">The work is not only technical. It is about building habits, confidence, and institutional practices that help officials use data more effectively — long after any programme ends.</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-icon">◈</div>
+      <div class="impact-title">Strengthening accountability through performance routines</div>
+      <p class="impact-body">Regular performance meetings create a space for leaders and officials to review evidence, identify bottlenecks, assign actions, and monitor follow-through. Data enters decision-making where it matters.</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-icon">◈</div>
+      <div class="impact-title">Preparing African cities for the future of data and AI</div>
+      <p class="impact-body">AI, remote sensing, and predictive analytics depend on strong foundations: reliable data, clear governance, fit-for-purpose systems, and capable institutions. This work builds those foundations.</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-icon">◈</div>
+      <div class="impact-title">Helping cities move from ambition to implementation</div>
+      <p class="impact-body">At the heart of the work is a simple commitment: helping African cities build the institutional capability to understand their challenges, track what matters, and deliver better outcomes for residents.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="label">Contact</div>
+  <h2 class="section-title">For collaborations, advisory work, speaking, or city data and delivery support</h2>
+  <p class="contact-sub">I work with city leaders, funders, academic partners, philanthropic institutions, and public-sector reform organisations. If you are working on African urban data, governance, or delivery — get in touch.</p>
+  <a href="mailto:mawande@example.com" class="contact-email">mawande@example.com</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Mawande Ngidi · Urban Governance &amp; Data Systems</p>
+  <div class="footer-logo">MN</div>
+</footer>
+
+</body>
+</html>
